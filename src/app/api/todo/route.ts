@@ -3,10 +3,18 @@ import { NextResponse } from "next/server";
 
 const prisma=new PrismaClient()
 
+export async function main(){//ここのコードは非同期通信でprismaにつなる　エラーが起こったときにDB接続に失敗しましたと返す。
+  try{
+      await prisma.$connect();
+  }catch(err){
+      return Error("DB接続に失敗しました")
+  }
+}
+
 //todoリスト全取得API
 export const GET = async (req: Request, res: NextResponse) => {
     try {
-      await prisma.$connect();
+      await main();
       const posts = await prisma.post.findMany();
       return NextResponse.json({message:"Success",posts},{status:200});
     } catch (err) {
@@ -20,7 +28,7 @@ export const GET = async (req: Request, res: NextResponse) => {
   export const POST = async (req: Request, res: NextResponse) => {
     try {
       const { title } = await req.json();
-      await prisma.$connect();
+      await main();
       const post = await prisma.post.create({ data: { title } });
       return NextResponse.json({message:"Success",post},{status:201});
     } catch (err) {
