@@ -27,16 +27,6 @@ const EditTodo=({params}:{params:{id:number}})=>{
         router.refresh();
     };
 
-    useEffect(()=>{
-        getTodoByID(params.id).then((data)=>{
-            if(titleRef.current){
-                titleRef.current.value=data.title;
-            }
-        }).catch(err=>{
-            
-        })
-    },[params.id]);
-
     return (
         <div className="w-full m-auto flex my-4">
             <div className="flex flex-col justify-center items-center m-auto">
