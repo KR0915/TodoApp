@@ -8,10 +8,9 @@ const prisma=new PrismaClient();
 //todoリスト記事詳細取得api
 export const GET=async(req:Request,res:NextResponse)=>{
     try{
-        const id:number=parseInt(req.url.split("/todo/")[1]);//https://localhost:3000/api/blog/1の/blog/部分で切り分ける parseIntは文字列から整数を取得するために使う　urlをsplitでぶつ切りにし、そのあとの[id]を取得し、その[id]のデータを持ってくる
+        const id:number=parseInt(req.url.split("/todo/")[1]);
         await main();//ここでプリズマにつなぐ
-        const post=await prisma.post.findFirst({where:{id}});//https://localhost:3000/api/blog/1<=ここの部分にブログのidがふられのでそれを取得する  findFirstはfindMannyと違い部分取得 where句はidなどをとくていする　ここでデータベースから値をとる
-        return NextResponse.json({message:"Success",post},{status:200});
+        const post=await prisma.post.findFirst({where:{id}});
     }catch(err){
         return NextResponse.json({message:"Error",err},{status:500})
     }finally{
@@ -22,13 +21,13 @@ export const GET=async(req:Request,res:NextResponse)=>{
 //ブログ記事編集用API
 export const PUT=async(req:Request,res:NextResponse)=>{
     try{
-        const id:number=parseInt(req.url.split("/todo/")[1]);//parseIntで中身をnumber型にする
+        const id:number=parseInt(req.url.split("/todo/")[1]);
 
-        const{title}=await req.json();//titleとdescriptionをjson形式に格納する
+        const{title}=await req.json();
 
         await main();
         
-        const post=await prisma.post.update({//updatateはprismaの関数でデータベースの値をアップデートできる
+        const post=await prisma.post.update({
             data:{title},
             where:{id},
         });

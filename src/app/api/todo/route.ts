@@ -25,7 +25,8 @@ export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
       await prisma.$disconnect();
     }
   }
-  
+
+//todoリスト投稿API
   export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const { title } = req.body;
