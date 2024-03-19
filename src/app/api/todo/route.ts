@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 const prisma=new PrismaClient()
 
-export async function main(){//ここのコードは非同期通信でprismaにつなる　エラーが起こったときにDB接続に失敗しましたと返す。
+export async function main(){
   try{
       await prisma.$connect();
   }catch(err){
