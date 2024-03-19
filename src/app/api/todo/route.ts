@@ -1,11 +1,10 @@
 import { PrismaClient } from "@prisma/client"
-import { NextApiRequest, NextApiResponse } from "next";
-import { NextResponse } from "next/server";
+import { NextApiResponse } from "next";
 
 const prisma=new PrismaClient()
 
 //todoリスト全取得API
-export const GET = async (_req: NextApiRequest, res: NextApiResponse) => {
+export const GET = async (_req: Request, res: NextApiResponse) => {
     try {
       await prisma.$connect();
       const posts = await prisma.post.findMany();
@@ -18,9 +17,9 @@ export const GET = async (_req: NextApiRequest, res: NextApiResponse) => {
   }
 
 //todoリスト投稿API
-  export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const POST = async (req: Request, res: NextApiResponse) => {
     try {
-      const { title } = req.body;
+      const { title } = await req.json();
       await prisma.$connect();
       const post = await prisma.post.create({ data: { title } });
       res.status(201).json({ message: "Success", post });
