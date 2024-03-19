@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client"
-import { type NextApiResponse } from "next";
+import { type NextApiRequest,NextApiResponse } from "next";
 
 const prisma=new PrismaClient()
 
 //todoリスト全取得API
-export const GET = async (_req: Request, res: NextApiResponse) => {
+export const GET = async (_req: NextApiRequest, res: NextApiResponse) => {
     try {
       await prisma.$connect();
       const posts = await prisma.post.findMany();
